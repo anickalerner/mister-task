@@ -13,9 +13,10 @@ import IconButton from '@material-ui/core/IconButton';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 
 export default function TaskCard(props) {
+    const colors = ['D1EEF0', 'EEE5F0', 'C1D7C1', 'B9BDCB'];
     const { task } = props;
     const [importance, setImportance] = React.useState(task.importance ? task.importance : 1);
-    const colors = ['D1EEF0', 'EEE5F0', 'C1D7C1', 'B9BDCB'];
+    const [color] = React.useState(getRandomColor());
 
     function handleChange(ev){
         setImportance(ev.target.value);
@@ -32,7 +33,7 @@ export default function TaskCard(props) {
 
     const editDisabled = task.importance === importance;
     return (
-        <div style={{ backgroundColor: getRandomColor()}}>
+        <div style={{ backgroundColor: color}}>
         <Card variant="outlined" className="task-card">
             {task.done && <Chip label="Done" className="done" />}
             <CardHeader title={task.title} />
@@ -42,6 +43,7 @@ export default function TaskCard(props) {
                    
                     <li><AccessTimeIcon />{new Date(task.createdAt).toLocaleString()}</li>
                     {task.triesCount && <li><AutorenewIcon /> Tries count: {task.triesCount}</li>}
+                    {task.done && <li><AccessTimeIcon /> Done at: {new Date(task.doneAt).toLocaleString()}</li>}
                 </ul>
             </CardContent>
             <CardActions>

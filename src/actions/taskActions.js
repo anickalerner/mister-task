@@ -56,11 +56,10 @@ export function startTask(id){
   };
 }
 
-export function markDone(tasks, id){
+export function updateTaskTrial(task){
   return dispatch => {
     try {
-      var task = tasks.find(task => task._id === id);
-      dispatch({ type: 'MARK_DONE', task: {...task, done: true} });
+      dispatch({ type: 'MARK_DONE', task });
     } catch (err) {
       console.log('TaskActions: err in markDone', err);
     }

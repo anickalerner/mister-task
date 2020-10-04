@@ -1,25 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TaskCard from './cmps/TaskCard';
-import { loadTasks, addTask, deleteTask, updateTask, startTask, markDone } from './actions/taskActions.js';
+import { loadTasks, addTask, deleteTask, updateTask, startTask, updateTaskTrial } from './actions/taskActions.js';
 import AddTask from './cmps/AddTask.jsx';
 import socketService from './services/socketService';
+const colors = ['D1EEF0', 'EEE5F0', 'C1D7C1', 'B9BDCB'];
 
 class App extends React.Component {
   componentDidMount() {
     this.props.loadTasks();
     socketService.setup();
-    socketService.on('task done', this.markDone)
+    socketService.on('task done', this.updateTaskTrial)
   }
 
   componentWillUnmount() {
-    socketService.off('task done', this.markDone);
+    socketService.off('task done', this.updateTaskTrial);
     socketService.terminate();
   }
 
-  markDone = (id) => {
-    console.log('socket responded');
-    this.props.markDone(this.props.tasks, id);
+  updateTaskTrial = (taskStr) => {
+    this.props.updateTaskTrial(JSON.parse(taskStr));
   }
 
   onAddTask = (title) =>{
@@ -37,6 +37,13 @@ class App extends React.Component {
   onStart = (id) =>{
     this.props.startTask(id);
   }
+
+  getRandomColor = () => {
+    const ind = parseInt(Math.random() * (colors.length));
+    return '#' + colors[ind];
+  }
+
+
   render() {
     if (!this.props.tasks) return <div>Loading</div>;
     return (
@@ -46,7 +53,7 @@ class App extends React.Component {
         <div className="tasks-container">
           {
             this.props.tasks.map((task, ind) =>
-              <TaskCard task={task} key={ind} onDelete={this.onDelete} onEdit={this.onEdit} onStart={this.onStart} />
+              <TaskCard task={task} key={ind} onDelete={this.onDelete} onEdit={this.onEdit} onStart={this.onStart} color={this.getRandomColor()} />
             )
           }
         </div>
@@ -67,7 +74,7 @@ const mapDispatchToProps = {
   deleteTask,
   updateTask,
   startTask,
-  markDone
+  updateTaskTrial
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
