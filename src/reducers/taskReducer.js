@@ -5,6 +5,7 @@ const initialState = {
 export default function(state = initialState, action = {}) {
   switch (action.type) {
     case 'SET_TASKS':
+    case 'UNDO_TASKS':
       return { ...state, tasks: action.tasks };
     case 'ADD_TASK':
       return { ...state, tasks: [...state.tasks, action.task] };

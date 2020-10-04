@@ -5,7 +5,8 @@ export default {
   query,
   remove,
   update,
-  start
+  start,
+  undoAll
 };
 
 function query() {
@@ -26,4 +27,8 @@ function update(task) {
 
 function start(id){
   return httpService.put(`task/${id}/start`);
+}
+
+function undoAll(){
+  return httpService.put('task/undo');
 }

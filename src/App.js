@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TaskCard from './cmps/TaskCard';
-import { loadTasks, addTask, deleteTask, updateTask, startTask, updateTaskTrial } from './actions/taskActions.js';
+import { loadTasks, addTask, deleteTask, updateTask, startTask, updateTaskTrial, undoTasks } from './actions/taskActions.js';
 import AddTask from './cmps/AddTask.jsx';
 import socketService from './services/socketService';
+import { Button } from '@material-ui/core';
 const colors = ['D1EEF0', 'EEE5F0', 'C1D7C1', 'B9BDCB'];
 
 class App extends React.Component {
@@ -43,6 +44,9 @@ class App extends React.Component {
     return '#' + colors[ind];
   }
 
+  undoTasks = () => {
+    this.props.undoTasks();
+  }
 
   render() {
     if (!this.props.tasks) return <div>Loading</div>;
@@ -58,6 +62,7 @@ class App extends React.Component {
           }
         </div>
         <AddTask onAddTask={this.onAddTask} onDelete={this.onDelete} />
+        <Button onClick={this.undoTasks}>Undo tasks</Button>
       </div>
     )
   }
@@ -74,7 +79,8 @@ const mapDispatchToProps = {
   deleteTask,
   updateTask,
   startTask,
-  updateTaskTrial
+  updateTaskTrial,
+  undoTasks
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

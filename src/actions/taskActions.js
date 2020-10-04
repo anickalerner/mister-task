@@ -65,3 +65,14 @@ export function updateTaskTrial(task){
     }
   };
 }
+
+export function undoTasks(){
+  return async dispatch => {
+    try {
+      const tasks = await taskService.undoAll();
+      dispatch({ type: 'UNDO_TASKS', tasks });
+    } catch (err) {
+      console.log('TaskActions: err in markDone', err);
+    }
+  };
+}
