@@ -1,0 +1,50 @@
+.app-container{
+    max-width: 1000px;
+    margin: 0 auto;
+    .tasks-container{
+         display: grid;
+         grid-template-columns: repeat(4, 1fr);
+         grid-gap: 20px;
+     }
+     .task-card{
+         position: relative;
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
+         background-color: rgba(0, 0, 0, 0);
+         ul{
+             list-style: none;
+             margin: 0;
+             padding: 0;
+             li{
+                 margin: 0;
+                 padding: 0;
+                 display: flex;
+                 svg{
+                     margin-right: 6px;
+                 }
+             }
+         }
+         .done{
+             background-color: green;
+             color: white;
+             font-weight: bold;
+             position: absolute;
+             right: 4px;
+             top: 4px;
+         }
+         input.task-importance{
+            width: 50px;
+            margin-left: 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+         }
+     }
+     .add-task{
+         margin-top: 20px;
+     }
+     .add-task-btn{
+         background-color: #C1CFD7;
+         margin-right: 5px;
+     }
+}
